@@ -12,3 +12,4 @@ async function main(){
     await mongoose.connect(process.env.MONGO_DB_URI)
     app.listen(process.env.PORT,()=>console.log(`server has startd on port:${PORT}`))
 }
+main()
