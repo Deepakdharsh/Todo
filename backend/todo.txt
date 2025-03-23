@@ -1,0 +1,5 @@
+-there should two collection 1 for user and the other 1 for the todo
+-user collection should have : username,email,password,todos:[]
+-todo collection should have : todo,isDone,dueDate
+-user routes : /signup,/login,
+-todo routes : /create,/update,/read,/delete
