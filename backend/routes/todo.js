@@ -21,7 +21,8 @@ TodoRouter.post("/create",auth,async(req,res)=>{
     })
 
     res.json({
-        message:"created todo"
+        message:"created todo",
+        userId
     })
     
 })
@@ -52,7 +53,7 @@ TodoRouter.put("/update",auth,async(req,res)=>{
 TodoRouter.get("/read",auth,async(req,res)=>{
     const userId=req.userId
     
-    const todos=await Todo.find({_id:userId})
+    const todos=await Todo.find({userId})
 
     res.json({
         message:"successfully feteched Todo",
@@ -82,4 +83,4 @@ TodoRouter.delete("/delete",auth,async(req,res)=>{
     })
 })
 
-module.exports=UserRouter
+module.exports=TodoRouter
