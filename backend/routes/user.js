@@ -14,7 +14,8 @@ UserRouter.post("/signup",async(req,res)=>{
         })
     }
 
-    const user=await User.findOne({email})
+    try {
+        const user=await User.findOne({email})
 
     if(user){
         return res.json({
@@ -33,6 +34,9 @@ UserRouter.post("/signup",async(req,res)=>{
         message:"user created"
     })
     
+    } catch (error) {
+        console.log(error.message)
+    }
 })
 
 UserRouter.post("/login",async(req,res)=>{
@@ -44,6 +48,8 @@ UserRouter.post("/login",async(req,res)=>{
         })
     }
 
+    try {
+        
     const user=await User.findOne({email})
 
     if(!user){
@@ -66,6 +72,9 @@ UserRouter.post("/login",async(req,res)=>{
         message:"your logged In",
         token
     })
+    } catch (error) {
+        console.log(error.error)
+    }
 })
 
 module.exports=UserRouter
