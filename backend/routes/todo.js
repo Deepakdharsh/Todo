@@ -14,16 +14,20 @@ TodoRouter.post("/create",auth,async(req,res)=>{
         })
     }
 
-    const newTodo=await Todo.create({
-        todo,
-        dueDate,
-        userId
-    })
-
-    res.json({
-        message:"created todo",
-        userId
-    })
+    try {
+        const newTodo=await Todo.create({
+            todo,
+            dueDate,
+            userId
+        })
+    
+        res.json({
+            message:"created todo",
+            userId
+        })        
+    } catch (error) {
+       console.log(error.message) 
+    }
     
 })
 
@@ -37,6 +41,8 @@ TodoRouter.put("/update",auth,async(req,res)=>{
         })
     }
 
+    try {
+        
     const updateTodo=await Todo.updateOne({_id:todoId,userId},{todo,dueDate},{new:true})
     
     if(!updateTodo){
@@ -48,17 +54,27 @@ TodoRouter.put("/update",auth,async(req,res)=>{
     res.json({
         message:"updated Todo"
     })
+
+    } catch (error) {
+        console.log(error.message)
+    }
+
 })
 
 TodoRouter.get("/read",auth,async(req,res)=>{
     const userId=req.userId
     
-    const todos=await Todo.find({userId})
+    try {
+        const todos=await Todo.find({userId})
 
-    res.json({
-        message:"successfully feteched Todo",
-        todos
-    })
+        res.json({
+            message:"successfully feteched Todo",
+            todos
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+  
 })
 
 TodoRouter.delete("/delete",auth,async(req,res)=>{
@@ -71,6 +87,7 @@ TodoRouter.delete("/delete",auth,async(req,res)=>{
         })
     }
 
+    try {
     const todo=await Todo.deleteOne({userId,_id:todoId})
 
     if(!todo){
@@ -81,6 +98,9 @@ TodoRouter.delete("/delete",auth,async(req,res)=>{
         messaage:"todo deleted",
         todo
     })
+    } catch (error) {
+       console.log(error.message) 
+    }
 })
 
 module.exports=TodoRouter
