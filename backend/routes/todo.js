@@ -33,9 +33,12 @@ TodoRouter.post("/create",auth,async(req,res)=>{
 
 TodoRouter.put("/update",auth,async(req,res)=>{
     const userId=req.userId
-    const {todo,dueDate,todoId}=req.body
+    const {
+        todo,
+        // dueDate,
+        id:todoId}=req.body
 
-    if(!todo||!dueDate){
+    if(!todo){
         res.json({
             message:"All fields are required"
         })
@@ -43,7 +46,10 @@ TodoRouter.put("/update",auth,async(req,res)=>{
 
     try {
         
-    const updateTodo=await Todo.updateOne({_id:todoId,userId},{todo,dueDate},{new:true})
+    const updateTodo=await Todo.updateOne({_id:todoId,userId},{
+        todo,
+        // dueDate
+    },{new:true})
     
     if(!updateTodo){
         return res.json({
@@ -80,7 +86,8 @@ TodoRouter.get("/read",auth,async(req,res)=>{
 TodoRouter.delete("/delete",auth,async(req,res)=>{
     const userId=req.userId
     const {todoId}=req.body
-
+    console.log(req.body)
+    
     if(!todoId){
         res.json({
             message:"all fields are required"

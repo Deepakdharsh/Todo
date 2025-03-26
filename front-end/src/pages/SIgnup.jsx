@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import api from '../api/axiosInstance'
+import {useNavigate} from "react-router-dom"
 
 function Signup() {
+  const navigate=useNavigate()
   const [form] = useState({
     username:"",
     email:"",
@@ -9,11 +12,15 @@ function Signup() {
 
   function handleChange(e){
     form[e.target.id]=e.target.value
-    console.log(form)
   }
 
-  function handleSubmit(){
-    
+ async function handleSubmit(e){
+    e.preventDefault()
+    const res=await api.post("/user/signup",form)
+    console.log(res)
+    if(res){
+      navigate("/login")
+    }
   }
 
   return (

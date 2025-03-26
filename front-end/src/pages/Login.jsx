@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import api from '../api/axiosInstance'
+import {useNavigate} from "react-router-dom"
 
 function Login() {
+  const navigate=useNavigate()
   const [form] = useState({
       email:"",
       password:""
@@ -11,8 +14,13 @@ function Login() {
       console.log(form)
     }
   
-    function handleSubmit(){
-  
+    async function handleSubmit(e){
+      e.preventDefault()
+      const res=await api.post("/user/login",form)
+      if(res.data){
+        localStorage.setItem("token",res.data.token)
+        navigate("/home")
+      }
     }
   
     return (
