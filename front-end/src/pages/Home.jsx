@@ -21,6 +21,7 @@ function Home() {
 
   function handleChange(e) {
     value[e.target.id] = e.target.value;
+    console.log(value)
   }
 
   async function handleSubmit(e) {
@@ -37,7 +38,7 @@ function Home() {
       <div className="bg-grey w-[500px] h-[400px] flex flex-col items-center p-4 gap-2.5">
         <div className="flex">
           <input
-          value={value.todo}
+          // value={value.todo}
             type="text"
             id="todo"
             onChange={handleChange}
@@ -45,7 +46,7 @@ function Home() {
             placeholder="add todos"
           />
           <input
-          value={value.dueDate}
+          // value={value.dueDate}
             type="text"
             id="dueDate"
             onChange={handleChange}

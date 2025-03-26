@@ -24,7 +24,7 @@ function List({todo:Todo,id,fnc}) {
             todoId:id
         }
         console.log(obj)
-        const res=await api.delete('todo/delete',obj)
+        const res=await api.delete(`todo/delete/${id}`)
         console.log(res)
         fnc()
     }
