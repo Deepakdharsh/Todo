@@ -85,8 +85,6 @@ TodoRouter.get("/read",auth,async(req,res)=>{
 
 TodoRouter.delete("/delete/:id",auth,async(req,res)=>{
     const userId=req.userId
-    // const {todoId}=req.body
-    // console.log(req.body)
     const todoId=req.params.id
     
     if(!todoId){
