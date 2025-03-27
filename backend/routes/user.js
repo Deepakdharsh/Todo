@@ -66,15 +66,38 @@ UserRouter.post("/login",async(req,res)=>{
         })
     }
 
-    const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
+    const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"15m"})
+    const refreshToken=jwt.sign({id:user._id},process.env.REFRESH_SECRET,{expiresIn:"7d"})
+
+    res.cookie("refreshToken",refreshToken,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV == "production" ? true : false,
+        sameSite:"strict"
+    })
 
     res.json({
         message:"your logged In",
         token
     })
+
     } catch (error) {
         console.log(error.error)
     }
+})
+
+UserRouter.post("/refresh",(req,res)=>{
+    console.log("refresh")
+    const refreshToken=req.cookies.refreshToken
+    if(!refreshToken) return res.status(401).json({message:"No refresh token"})
+
+    jwt.verify(refreshToken,process.env.REFRESH_SECRET,(err,user)=>{
+        if(err) return res.status(403).json({
+            message:"Invaild refresh token"
+        })
+
+        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"15m"})
+        res.json({token})
+    })    
 })
 
 module.exports=UserRouter

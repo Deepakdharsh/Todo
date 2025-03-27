@@ -5,11 +5,14 @@ const mongoose=require("mongoose")
 const cors=require("cors")
 const UserRouter=require("./routes/user")
 const TodoRouter=require("./routes/todo")
+const cookieParser=require("cookie-parser")
 
 app.use(express.json())
 app.use(cors({
-    origin:['http://localhost:5173']
+    origin:['http://localhost:5173'],
+    credentials:true
 }))
+app.use(cookieParser())
 
 app.use("/user",UserRouter)
 app.use("/todo",TodoRouter) 

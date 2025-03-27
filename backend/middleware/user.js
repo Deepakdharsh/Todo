@@ -9,7 +9,7 @@ function auth(req,res,next){
             next()
         }
     }else{
-        res.json({
+        res.status(401).json({
             message:"invaild tokens"
         })
     }
